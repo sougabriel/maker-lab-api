@@ -1,6 +1,6 @@
 import { Request } from "express"
 import { User } from "src/user/entities/user.entity"
 
-export class AuthResquest extends Request {
+export class AuthRequest extends Request {
     user: User;
 }
