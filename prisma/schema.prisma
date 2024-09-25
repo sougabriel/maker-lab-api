@@ -7,11 +7,103 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Person {
+  id          String   @id @default(uuid())
+  fullname    String
+  email       String   @unique
+  phoneNumber String   @unique
+  publicType  String   @default("client")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt @default(now())
+  Entry       Entry[]
+}
+
+model Product {
+  id        Int      @id @default(autoincrement())
+  type      String
+  price     Decimal
+  createdAt DateTime @default(now())
+}
+
+model Print3D {
+  id          String    @id @default(uuid())
+  title       String
+  printUrl    String?
+  price       Decimal
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt @default(now())
+  printer3D   Printer3D @relation(fields: [printer3DId], references: [id])
+  printer3DId Int
+}
+
+model Microprocessor {
+  id           String   @id @default(uuid())
+  model        String
+  manufacturer String
+  memoryRam    Decimal
+  storage      Int?
+  conections   String   @default("Bluetooth")
+  amount       Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt @default(now())
+}
+
+model Event {
+  id             Int       @id @default(autoincrement())
+  eventName      String
+  description    String
+  startDate      DateTime?
+  endDate        DateTime?
+  numberVisitors Int?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt @default(now())
+}
+
+model Entry {
+  id        Int       @id @default(autoincrement())
+  entryDate DateTime
+  entryTime DateTime?
+  purpose   String?   @default("Event")
+  person    Person    @relation(fields: [personId], references: [id])
+  personId  String
+  createdAt DateTime  @default(now())
+}
+
+model Printer3D {
+  id           Int       @id @default(autoincrement())
+  model        String
+  manufacturer String
+  printType    String    @default("filament")
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt @default(now())
+  Print3D      Print3D[]
+}
+
 model User {
-  id String @id @default(uuid())
+  id          String   @id @default(uuid())
+  email       String   @unique
+  password    String
+  accessLevel Int      @default(1)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt @default(now())
+  Log         Log[]
+}
 
-  email    String @unique
-  password String
+model Manual {
+  id          Int      @id @default(autoincrement())
+  title       String   @unique
+  author      String
+  description String
+  content     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt @default(now())
+}
 
-  name String
+model Log {
+  id         Int      @id @default(autoincrement())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  activity   String
+  executedAt DateTime @default(now())
 }
