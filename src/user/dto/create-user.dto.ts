@@ -1,6 +1,9 @@
 import { User } from '../entities/user.entity';
 import {
+    IsBoolean,
+    IsDate,
     IsEmail,
+    IsNumber,
     IsString,
     Matches,
     MaxLength,
@@ -18,7 +21,4 @@ export class CreateUserDto extends User {
         message: 'password too weak',
     })
     password: string;
-
-    @IsString()
-    name: string;
 }

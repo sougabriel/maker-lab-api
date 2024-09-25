@@ -1,6 +1,9 @@
 export class User {
-    id?: number;
+    id?: string;
     email: string;
     password: string;
-    name: string;
+    accessLevel?: number;
+    isActive?: boolean;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
