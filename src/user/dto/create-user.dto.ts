@@ -1,9 +1,9 @@
 import { User } from '../entities/user.entity';
 import {
     IsBoolean,
-    IsDate,
     IsEmail,
     IsNumber,
+    IsOptional,
     IsString,
     Matches,
     MaxLength,
@@ -17,8 +17,15 @@ export class CreateUserDto extends User {
     @IsString()
     @MinLength(8)
     @MaxLength(32)
-    @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-        message: 'password too weak',
-    })
+    @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, { message: 'password too weak' })
     password: string;
+
+    @IsOptional()
+    @IsNumber()
+    @MinLength(1)
+    accessLevel?: number;
+
+    @IsOptional()
+    @IsBoolean()
+    isActive?: boolean;
 }
