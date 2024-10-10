@@ -16,6 +16,6 @@ export class AppController {
 
   @Get('me')
   getMe(@CurrentUser() user: User): string {
-    return `Hello ${user.name}!`;
+    return `Hello ${user.email.split('@')[0]}!`;
   }
 }
