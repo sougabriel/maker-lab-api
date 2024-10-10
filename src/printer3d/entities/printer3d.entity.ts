@@ -7,5 +7,4 @@ export class Printer3d {
     printType: string;
     createdAt?: Date;
     updatedAt?: Date;
-    Print3D: Print3d[];
 }

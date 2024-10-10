@@ -1,5 +1,3 @@
-import { Entry } from "src/entry/entities/entry.entity";
-
 export class Person {
     id?: string;
     fullname: string;
@@ -8,5 +6,4 @@ export class Person {
     publicType?: string;
     createdAt?: Date;
     updatedAt?: Date;
-    Entry?: Entry[];
 }

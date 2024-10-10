@@ -5,7 +5,6 @@ export class Entry {
     entryDate: Date;
     entryTime?: Date;
     purpose?: String;
-    person: Person;
     personId: string;
     createdAt?: Date;
 }
