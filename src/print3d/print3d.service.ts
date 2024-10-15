@@ -1,26 +1,37 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePrint3dDto } from './dto/create-print3d.dto';
 import { UpdatePrint3dDto } from './dto/update-print3d.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class Print3dService {
-  create(createPrint3dDto: CreatePrint3dDto) {
-    return 'This action adds a new print3d';
+  constructor(private prisma: PrismaService) {}
+  
+  async create(data: CreatePrint3dDto) {
+    return await this.prisma.print3D.create({ data });
   }
 
-  findAll() {
-    return `This action returns all print3d`;
+  async findAll() {
+    return await this.prisma.print3D.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} print3d`;
+  async findOne(id: string) {
+    return await this.prisma.print3D.findUnique({ where: { id } });
   }
 
-  update(id: number, updatePrint3dDto: UpdatePrint3dDto) {
-    return `This action updates a #${id} print3d`;
+  async update(id: string, data: UpdatePrint3dDto) {
+    return await this.prisma.print3D.update({ data, where: { id } });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} print3d`;
+  async updateAll(data: UpdatePrint3dDto) {
+    return await this.prisma.print3D.updateMany({ data });
+  }
+
+  async remove(id: string) {
+    return await this.prisma.print3D.delete({ where: { id } });
+  }
+
+  async removeAll() {
+    return await this.prisma.print3D.deleteMany();
   }
 }
