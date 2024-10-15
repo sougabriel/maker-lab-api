@@ -1,5 +1,4 @@
 import { IsString } from "class-validator";
-import { Print3d } from "src/print3d/entities/print3d.entity";
 
 export class CreatePrinter3dDto {
     @IsString()
@@ -10,6 +9,5 @@ export class CreatePrinter3dDto {
 
     @IsString()
     printType: string;
-    
-    Print3D: Print3d[];
+
 }
