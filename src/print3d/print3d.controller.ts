@@ -19,16 +19,16 @@ export class Print3dController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.print3dService.findOne(+id);
+    return this.print3dService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePrint3dDto: UpdatePrint3dDto) {
-    return this.print3dService.update(+id, updatePrint3dDto);
+    return this.print3dService.update(id, updatePrint3dDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.print3dService.remove(+id);
+    return this.print3dService.remove(id);
   }
 }
