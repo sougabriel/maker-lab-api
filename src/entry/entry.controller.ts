@@ -2,6 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { EntryService } from './entry.service';
 import { CreateEntryDto } from './dto/create-entry.dto';
 import { UpdateEntryDto } from './dto/update-entry.dto';
+import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
+import { User } from 'src/user/entities/user.entity';
 
 @Controller('entry')
 export class EntryController {
@@ -23,12 +25,30 @@ export class EntryController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEntryDto: UpdateEntryDto) {
-    return this.entryService.update(+id, updateEntryDto);
+  update(@Param('id') id: string, @Body() updateEntryDto: UpdateEntryDto, @CurrentUser() user: User) {
+    if (user.accessLevel === 1) {
+      return this.entryService.update(+id, updateEntryDto);
+    }
+  }
+
+  @Patch()
+  updateAll(@Body() updateEntryDto: UpdateEntryDto, @CurrentUser() user: User) {
+    if (user.accessLevel === 1) {
+      return this.entryService.updateAll(updateEntryDto);
+    }
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.entryService.remove(+id);
+  remove(@Param('id') id: string, @CurrentUser() user: User) {
+    if (user.accessLevel === 1) {
+      return this.entryService.remove(+id);
+    }
+  }
+
+  @Delete()
+  removeAll(@CurrentUser() user: User) {
+    if (user.accessLevel === 1) {
+      return this.entryService.removeAll();
+    }
   }
 }
