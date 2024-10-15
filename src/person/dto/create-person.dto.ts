@@ -1,5 +1,4 @@
-import { IsEmail, IsOptional, IsPhoneNumber, IsString } from "class-validator";
-import { Entry } from "src/entry/entities/entry.entity";
+import { IsEmail, IsPhoneNumber, IsString } from "class-validator";
 
 export class CreatePersonDto {
     @IsString()
@@ -14,7 +13,4 @@ export class CreatePersonDto {
 
     @IsString()
     publicType?: string;
-    
-    @IsOptional()
-    Entry?: Entry[];
 }
