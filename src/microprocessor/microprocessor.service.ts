@@ -1,26 +1,37 @@
 import { Injectable } from '@nestjs/common';
 import { CreateMicroprocessorDto } from './dto/create-microprocessor.dto';
 import { UpdateMicroprocessorDto } from './dto/update-microprocessor.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class MicroprocessorService {
-  create(createMicroprocessorDto: CreateMicroprocessorDto) {
-    return 'This action adds a new microprocessor';
+  constructor(private prisma: PrismaService) { }
+
+  async create(data: CreateMicroprocessorDto) {
+    return await this.prisma.microprocessor.create({ data });
   }
 
-  findAll() {
-    return `This action returns all microprocessor`;
+  async findAll() {
+    return await this.prisma.microprocessor.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} microprocessor`;
+  async findOne(id: string) {
+    return await this.prisma.microprocessor.findUnique({ where: { id } });
   }
 
-  update(id: number, updateMicroprocessorDto: UpdateMicroprocessorDto) {
-    return `This action updates a #${id} microprocessor`;
+  async update(id: string, data: UpdateMicroprocessorDto) {
+    return await this.prisma.microprocessor.update({ data, where: { id } });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} microprocessor`;
+  async updateAll(data: UpdateMicroprocessorDto) {
+    return await this.prisma.microprocessor.updateMany({ data });
+  }
+
+  async remove(id: string) {
+    return await this.prisma.microprocessor.delete({ where: { id } });
+  }
+
+  async removeAll() {
+    return await this.prisma.microprocessor.deleteMany();
   }
 }
