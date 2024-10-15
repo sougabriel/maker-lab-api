@@ -5,7 +5,6 @@ export class Print3d {
     title: string;
     printUrl?: string;
     price: number;
-    printer3D: Printer3d;
     printer3DId: number;
     createdAt?: Date;
     updatedAt?: Date;
