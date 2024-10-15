@@ -1,26 +1,37 @@
 import { Injectable } from '@nestjs/common';
 import { CreateManualDto } from './dto/create-manual.dto';
 import { UpdateManualDto } from './dto/update-manual.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ManualService {
-  create(createManualDto: CreateManualDto) {
-    return 'This action adds a new manual';
+  constructor(private prisma: PrismaService) { }
+
+  async create(data: CreateManualDto) {
+    return await this.prisma.manual.create({ data });
   }
 
-  findAll() {
-    return `This action returns all manual`;
+  async findAll() {
+    return await this.prisma.manual.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} manual`;
+  async findOne(id: number) {
+    return await this.prisma.manual.findUnique({ where: { id } });
   }
 
-  update(id: number, updateManualDto: UpdateManualDto) {
-    return `This action updates a #${id} manual`;
+  async update(id: number, data: UpdateManualDto) {
+    return await this.prisma.manual.update({ data, where: { id } });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} manual`;
+  async updateAll(data: UpdateManualDto) {
+    return await this.prisma.manual.updateMany({ data });
+  }
+
+  async remove(id: number) {
+    return await this.prisma.manual.delete({ where: { id } });
+  }
+
+  async removeAll() {
+    return await this.prisma.manual.deleteMany();
   }
 }
