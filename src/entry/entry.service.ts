@@ -1,26 +1,37 @@
 import { Injectable } from '@nestjs/common';
 import { CreateEntryDto } from './dto/create-entry.dto';
 import { UpdateEntryDto } from './dto/update-entry.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class EntryService {
-  create(createEntryDto: CreateEntryDto) {
-    return 'This action adds a new entry';
+  constructor(private prisma: PrismaService) { }
+
+  async create(data: CreateEntryDto) {
+    return await this.prisma.entry.create({ data });
   }
 
-  findAll() {
-    return `This action returns all entry`;
+  async findAll() {
+    return await this.prisma.entry.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} entry`;
+  async findOne(id: number) {
+    return await this.prisma.entry.findUnique({ where: { id } });
   }
 
-  update(id: number, updateEntryDto: UpdateEntryDto) {
-    return `This action updates a #${id} entry`;
+  async update(id: number, data: UpdateEntryDto) {
+    return await this.prisma.entry.update({ data, where: { id } });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} entry`;
+  async updateAll(data: UpdateEntryDto) {
+    return await this.prisma.entry.updateMany({ data });
+  }
+
+  async remove(id: number) {
+    return await this.prisma.entry.delete({ where: { id } });
+  }
+
+  async removeAll() {
+    return await this.prisma.entry.deleteMany();
   }
 }
